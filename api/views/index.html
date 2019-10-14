@@ -1,0 +1,57 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Convert Text To Image | Shahid Kamal</title>
+    <meta name="description" content="A text to png convertor node">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@sh4hidkh4n">
+    <meta name="twitter:creator" content="@sh4hidkh4n">
+    <meta name="twitter:title" content="Text To Image Convertor | Shahid Kamal">
+    <meta name="twitter:description" content="A simple text to image convertor written in node using text-to-image module">
+    <meta name="twitter:image" content="https://i.imgur.com/y2UtGgh.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+  </head>
+  <body class="teal darken-3">
+    <div class="container" id="app">
+      <div class="row">
+        <div class="col s12 m12 center white-text">
+          <h1>
+            Text To Image Convertor
+          </h1>
+        </div>
+      </div>
+      <div class="row card-panel pink darken-2">
+        <form method="POST" action="/image">
+          <div class="input-field col s12">
+            <textarea id="textarea1" name="text" class="materialize-textarea" placeholder="Enter Text"></textarea>
+          </div>
+          <div class="input-field col s12">
+            <input type="text" name="credit" placeholder="Any bottom text you want i.e -@sh4hidh4n" />
+          </div>
+          <div class="input-field col s12">
+            <input type="submit" class="btn cyan darken-4" value="Convert" />
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="card-panel blue-grey darken-3 center">
+          <a href="https://twitter.com/sh4hidkh4n" target="_blank">@sh4hidkh4n</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
