@@ -51,18 +51,17 @@ function makeItSquare(imageB64) {
     return canvas.toDataURL();
 }
 
-app.get("/", function(request, response) {
-    response.sendFile(__dirname + "/views/index.html");
+app.get("/", function(req, res) {
+    res.redirect("/image/hello world");
 });
 
-app.get("/image", function(req, res) {
-    res.redirect("/");
-});
+app.get("/image/:text", function(req, res) {
+    res.send(req.params.text);
+    // text now available
+    var username = req.body.credit ? req.body.credit : null;
+    var isRaw = req.query.raw == 1;
+    var text = req.params.text;
 
-app.post("/image", function(request, response) {
-    var username = request.body.credit ? request.body.credit : null;
-    var isRaw = request.query.raw == 1;
-    var text = request.body.text;
     const fileName =
         text
             .substring(0, 15)
@@ -73,8 +72,11 @@ app.post("/image", function(request, response) {
             .join("")
             .split(".")
             .join("") + ".png";
+
     console.log(fileName);
+
     if (username) text += "\n-" + username;
+
     var options = {
         debug: true,
         maxWidth: 400,
@@ -83,18 +85,17 @@ app.post("/image", function(request, response) {
         bgColor: "rgba(0, 0, 0, 0.95)",
         textColor: "white"
     };
+
     textToImage
         .generate(text, options)
         .then((dataUrl) => {
             var finalImage = makeItSquare(dataUrl);
             if (isRaw) {
-                response.end(finalImage.substring(22), "base64");
+                res.end(finalImage.substring(22), "base64");
             } else {
-                response
-                    .status(200)
-                    .send(
-                        `<a href="${finalImage}" download="${fileName}"><img title="${fileName}" src="${finalImage}" /></a>`
-                    );
+                res.status(200).send(
+                    `<a href="${finalImage}" download="${fileName}"><img title="${fileName}" src="${finalImage}" /></a>`
+                );
             }
         })
         .catch((err) => {
@@ -102,7 +103,55 @@ app.post("/image", function(request, response) {
         });
 });
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function() {
+app.post("/image", function(req, res) {
+    var username = req.body.credit ? req.body.credit : null;
+
+    var isRaw = req.query.raw == 1;
+
+    var text = req.body.text;
+
+    const fileName =
+        text
+            .substring(0, 15)
+            .toLowerCase()
+            .split(" ")
+            .join("_")
+            .split(",")
+            .join("")
+            .split(".")
+            .join("") + ".png";
+
+    console.log(fileName);
+
+    if (username) text += "\n-" + username;
+
+    var options = {
+        debug: true,
+        maxWidth: 400,
+        fontSize: 30,
+        margin: 20,
+        bgColor: "rgba(0, 0, 0, 0.95)",
+        textColor: "white"
+    };
+
+    textToImage
+        .generate(text, options)
+        .then((dataUrl) => {
+            var finalImage = makeItSquare(dataUrl);
+            if (isRaw) {
+                res.end(finalImage.substring(22), "base64");
+            } else {
+                res.status(200).send(
+                    `<a href="${finalImage}" download="${fileName}"><img title="${fileName}" src="${finalImage}" /></a>`
+                );
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+// listen for reqs :)
+var listener = app.listen(process.env.PORT || 3101, function() {
     console.log("Your app is listening on port " + listener.address().port);
 });
