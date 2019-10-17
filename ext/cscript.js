@@ -5,6 +5,6 @@ document.addEventListener("mouseup", function(event) {
     // rect = range.getBoundingClientRect();
 
     if (sel.toString().length) {
-        $("p").selectionSharer();
+        $(document).selectionSharer();
     }
 });
