@@ -25,7 +25,7 @@ function makeItSquare(imageB64) {
     context.strokeStyle = "black";
     context.lineWidth = 60;
     context.strokeRect(0, 0, squareDimension, squareDimension);
-    context.fillStyle = "rgba(0,0,0,0.95)";
+    context.fillStyle = "rgba(0,0,0,1)";
     context.fillRect(30, 30, squareDimension, squareDimension);
     // top text
     context.fillStyle = "white";
@@ -45,7 +45,6 @@ app.get("/image/:text", function(req, res) {
     // TODO: figure out how to put url/username in different sizes
 
     console.log(req.query);
-
     var isRaw = req.query.raw == 1;
     var text = req.params.text;
 
@@ -75,8 +74,9 @@ app.get("/image/:text", function(req, res) {
 
     textToImage
         .generate(text, options)
+
         .then((dataUrl) => {
-            var finalImage = makeItSquare(dataUrl);
+            var finalImage = dataUrl;
             if (isRaw) {
                 console.log("israw");
                 res.end(finalImage.substring(22), "base64");
