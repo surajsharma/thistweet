@@ -25,8 +25,13 @@ function makeItSquare(imageB64) {
     context.strokeStyle = "black";
     context.lineWidth = 60;
     context.strokeRect(0, 0, squareDimension, squareDimension);
+<<<<<<< HEAD
     context.fillStyle = "rgba(0,0,0,1)";
     context.fillRect(30, 30, squareDimension, squareDimension);
+=======
+    context.fillStyle = "rgba(0,0,90,0.95)";
+    context.fillRect(0, 0, squareDimension, squareDimension);
+>>>>>>> 148b56c2a5917c9e683297be1bcbabc7aae55038
     // top text
     context.fillStyle = "white";
     context.font = "18px Helvetica";
@@ -38,15 +43,17 @@ function makeItSquare(imageB64) {
     return canvas.toDataURL();
 }
 
-app.get("/image/:text", function(req, res) {
-    // res.send(`<a href="#">${req.params.text}</a>`);
+app.get("/image/:text/:source", function(req, res) {
     // text now available
     var username = req.body.credit ? req.body.credit : null;
     // TODO: figure out how to put url/username in different sizes
 
     console.log(req.query);
     var isRaw = req.query.raw == 1;
-    var text = req.params.text;
+    var text = '"' + req.params.text + '"';
+    var source = req.params.source;
+
+    var text_to_generate = [text, source];
 
     const fileName =
         text
@@ -68,13 +75,12 @@ app.get("/image/:text", function(req, res) {
         maxWidth: 400,
         fontSize: 28,
         margin: 20,
-        bgColor: "rgba(0, 0, 0, 0.95)",
+        bgColor: "rgba(0, 0, 0, 0)",
         textColor: "white"
     };
 
     textToImage
-        .generate(text, options)
-
+        .generate({text:text, source: source}, options)
         .then((dataUrl) => {
             var finalImage = dataUrl;
             if (isRaw) {
@@ -86,7 +92,7 @@ app.get("/image/:text", function(req, res) {
                     `<a href="${finalImage}" download="${fileName}"><img title="${fileName}" src="${finalImage}" /></a>`
                 );
             }
-            console.log(finalImage);
+            // console.log(finalImage);
         })
         .catch((err) => {
             console.log(err);
