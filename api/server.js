@@ -25,13 +25,8 @@ function makeItSquare(imageB64) {
     context.strokeStyle = "black";
     context.lineWidth = 60;
     context.strokeRect(0, 0, squareDimension, squareDimension);
-<<<<<<< HEAD
     context.fillStyle = "rgba(0,0,0,1)";
     context.fillRect(30, 30, squareDimension, squareDimension);
-=======
-    context.fillStyle = "rgba(0,0,90,0.95)";
-    context.fillRect(0, 0, squareDimension, squareDimension);
->>>>>>> 148b56c2a5917c9e683297be1bcbabc7aae55038
     // top text
     context.fillStyle = "white";
     context.font = "18px Helvetica";
@@ -75,12 +70,13 @@ app.get("/image/:text/:source", function(req, res) {
         maxWidth: 400,
         fontSize: 28,
         margin: 20,
-        bgColor: "rgba(0, 0, 0, 0)",
+        lineHeight: 28,
+        bgColor: "rgba(0, 0, 0, 1)",
         textColor: "white"
     };
 
     textToImage
-        .generate({text:text, source: source}, options)
+        .generate(text, options)
         .then((dataUrl) => {
             var finalImage = dataUrl;
             if (isRaw) {
