@@ -38,7 +38,7 @@ function makeItSquare(imageB64) {
     return canvas.toDataURL();
 }
 
-app.get("/image/:text/:source", function(req, res) {
+app.get("/image/:text/*", function(req, res) {
     // text now available
     var username = req.body.credit ? req.body.credit : null;
     // TODO: figure out how to put url/username in different sizes
@@ -46,10 +46,7 @@ app.get("/image/:text/:source", function(req, res) {
     console.log(req.query);
     var isRaw = req.query.raw == 1;
     var text = '"' + req.params.text + '"';
-    var source = req.params.source;
-
-    var text_to_generate = [text, source];
-
+    var source = req.params[0];
     const fileName =
         text
             .substring(0, 15)
@@ -76,19 +73,16 @@ app.get("/image/:text/:source", function(req, res) {
     };
 
     textToImage
-        .generate(text, options)
+        .generate({ text: text, source: source }, options)
         .then((dataUrl) => {
             var finalImage = dataUrl;
             if (isRaw) {
-                console.log("israw");
                 res.end(finalImage.substring(22), "base64");
             } else {
-                console.log("else");
                 res.status(200).send(
                     `<a href="${finalImage}" download="${fileName}"><img title="${fileName}" src="${finalImage}" /></a>`
                 );
             }
-            // console.log(finalImage);
         })
         .catch((err) => {
             console.log(err);
