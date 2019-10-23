@@ -8,11 +8,23 @@ chrome.contextMenus.create(contextMenuItem);
 
 chrome.contextMenus.onClicked.addListener(function(clickData) {
     if (clickData.menuItemId == "Tweet" && clickData.selectionText) {
-        alert(clickData.selectionText);
+        alert(currentURL);
     }
 });
 
+chrome.tabs.query(
+    { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+    function(tabs) {
+        getCurrentURL(tabs[0].url);
+    }
+);
+
+function getCurrentURL(tab) {
+    currentURL = tab;
+}
+
 function getSelected() {
+    currentURL = null;
     if (window.getSelection) {
         console.log(window.selection);
         return window.getSelection();
