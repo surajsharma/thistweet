@@ -137,7 +137,7 @@
                                 c.$popover.addClass("anim").css("top", g);
                             }, 0);
                     }
-                }, 10);
+                }, 1);
             }),
             (this.hide = function() {
                 c.$popover.hide();
