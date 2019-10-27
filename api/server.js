@@ -6,6 +6,7 @@ var textToImage = require("text-to-image");
 var base64Img = require("base64-img");
 var sizeOf = require("image-size");
 const Canvas = require("canvas");
+
 const tmp = "/tmp";
 
 app.use(express.static("public"));
@@ -38,25 +39,30 @@ function makeItSquare(imageB64) {
     return canvas.toDataURL();
 }
 
-app.get("/image/:text/*", function(req, res) {
+app.get("/image", function(req, res) {
     // text now available
     var username = req.body.credit ? req.body.credit : null;
     // TODO: figure out how to put url/username in different sizes
 
     console.log(req.query);
     var isRaw = req.query.raw == 1;
-    var text = '"' + req.params.text + '"';
-    var source = req.params[0];
-    const fileName =
-        text
-            .substring(0, 15)
-            .toLowerCase()
-            .split(" ")
-            .join("_")
-            .split(",")
-            .join("")
-            .split(".")
-            .join("") + ".png";
+    var text = '"' + req.query.text + '"';
+    var source = req.query.source;
+
+    console.log(text, source);
+
+    // const fileName =
+    //     text
+    //         .substring(0, 15)
+    //         .toLowerCase()
+    //         .split(" ")
+    //         .join("_")
+    //         .split(",")
+    //         .join("")
+    //         .split(".")
+    //         .join("") + ".png";
+
+    const fileName = "file.png";
 
     console.log(fileName);
 
