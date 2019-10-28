@@ -1,6 +1,8 @@
 // TODO:
 // 1. space after period
 // 2. dynamic width
+// 3. newline followed by space
+// 4. max limit.
 
 var express = require("express");
 var app = express();
@@ -71,7 +73,7 @@ app.get("/image", function(req, res) {
 
     var options = {
         debug: true,
-        maxWidth: 400,
+        maxWidth: 550,
         fontSize: 28,
         margin: 20,
         lineHeight: 28,
