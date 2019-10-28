@@ -1,4 +1,7 @@
-// init project
+// TODO:
+// 1. space after period
+// 2. dynamic width
+
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
@@ -51,20 +54,18 @@ app.get("/image", function(req, res) {
 
     console.log(text, source);
 
-    // const fileName =
-    //     text
-    //         .substring(0, 15)
-    //         .toLowerCase()
-    //         .split(" ")
-    //         .join("_")
-    //         .split(",")
-    //         .join("")
-    //         .split(".")
-    //         .join("") + ".png";
+    const fileName =
+        text
+            .substring(0, 15)
+            .toLowerCase()
+            .split(" ")
+            .join("_")
+            .split(",")
+            .join("")
+            .split(".")
+            .join("") + ".png";
 
-    const fileName = "file.png";
-
-    console.log(fileName);
+    console.log(fileName, text.length);
 
     if (username) text += "\n-" + username;
 
@@ -81,7 +82,7 @@ app.get("/image", function(req, res) {
     textToImage
         .generate({ text: text, source: source }, options)
         .then((dataUrl) => {
-            var finalImage = dataUrl;
+            var finalImage = makeItSquare(dataUrl);
             if (isRaw) {
                 res.end(finalImage.substring(22), "base64");
             } else {
