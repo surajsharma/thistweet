@@ -2,7 +2,6 @@
 // 1. space after period
 // 2. dynamic width
 // 3. newline followed by space
-// 4. max limit.
 
 var express = require("express");
 var app = express();
@@ -45,16 +44,11 @@ function makeItSquare(imageB64) {
 }
 
 app.get("/image", function(req, res) {
-    // text now available
     var username = req.body.credit ? req.body.credit : null;
     // TODO: figure out how to put url/username in different sizes
-
-    console.log(req.query);
     var isRaw = req.query.raw == 1;
     var text = '"' + req.query.text + '"';
     var source = req.query.source;
-
-    console.log(text, source);
 
     const fileName =
         text
@@ -73,7 +67,7 @@ app.get("/image", function(req, res) {
 
     var options = {
         debug: true,
-        maxWidth: 550,
+        maxWidth: 500,
         fontSize: 28,
         margin: 20,
         lineHeight: 28,
