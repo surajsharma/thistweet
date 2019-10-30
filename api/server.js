@@ -2,7 +2,8 @@
 // 1. space after period
 // 2. dynamic width
 // 3. newline followed by space
-
+// 4. minimum limit 280
+//
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
