@@ -46,7 +46,6 @@ function makeItSquare(imageB64) {
 
 app.get('/image', function(req, res) {
   var username = req.body.credit ? req.body.credit : null;
-  // TODO: figure out how to put url/username in different sizes
 
   var isRaw = req.query.raw == 1;
   var text = '"' + req.query.text + '"';
