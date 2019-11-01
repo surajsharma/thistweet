@@ -68,8 +68,8 @@ app.get('/image', function(req, res) {
 
   var options = {
     debug: true,
-    maxWidth: 500,
-    fontSize: 28,
+    maxWidth: 450,
+    fontSize: 20,
     margin: 20,
     lineHeight: 28,
     bgColor: 'rgba(0, 0, 0, 1)',
